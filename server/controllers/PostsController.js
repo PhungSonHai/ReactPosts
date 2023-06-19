@@ -12,6 +12,12 @@ class PostsController {
             .then(() => res.send("Create post success!"))
             .catch(next)
     }
+
+    detail(req, res, next) {
+        Posts.findByPk(req.params.id)
+            .then(post => res.json(post))
+            .catch(next)
+    }
 }
 
 module.exports = new PostsController;
