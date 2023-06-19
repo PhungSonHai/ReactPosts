@@ -1,42 +1,21 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import Card from 'react-bootstrap/Card';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layouts'
+import Home from './pages/Home';
+import CreatePost from './pages/CreatePost'
 
 function App() {
-
-  const [listPosts, setListPosts] = useState([])
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/posts")
-    .then(response =>setListPosts(response.data))
-    .catch(error => console.log(error))
-  }, []) 
-  
   return (
-    <>
-      <div className='d-flex align-items-center flex-column'>
-        {listPosts.map((item, index) => {
-          return <Card className="bg-primary text-white w-50 mt-5" key={index}>
-                  <Card.Header>{item.title}</Card.Header>
-                  <Card.Body>
-                    <blockquote className="blockquote mb-0">
-                      <p>
-                        {' '}
-                        {item.post_text}.{' '}
-                      </p>
-                      <footer className="blockquote-footer">
-                        <cite title="Source Title" className='text-warning'>{item.username}</cite>
-                      </footer>
-                    </blockquote>
-                  </Card.Body>
-                </Card>
-        })}
-      </div>
-    </>
+    <React.Fragment>
+      <Router>
+        <Routes>
+          <Route path='/' exact element={<Layout><Home/></Layout>}/>
+          <Route path='/create-post' exact element={<Layout><CreatePost/></Layout>}/>
+        </Routes>
+      </Router>
+    </React.Fragment>
   )
 }
 
