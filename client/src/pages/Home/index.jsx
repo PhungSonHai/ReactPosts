@@ -17,7 +17,7 @@ function Home() {
 
     return (
         <React.Fragment>
-            <div className='d-flex align-items-center flex-column'>
+            <div className='d-flex align-items-center flex-column' style={{ marginTop: 100 }}>
                 {listPosts.map((item, index) => {
                 return <Card className="bg-primary text-white w-50 my-4" onClick={() => navigate(`/posts/${item.id}`)} style={{ cursor: "pointer" }} key={index}>
                             <Card.Header>{item.title}</Card.Header>
