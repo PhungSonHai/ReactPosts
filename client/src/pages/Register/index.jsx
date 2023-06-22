@@ -27,16 +27,19 @@ function index() {
                 <div className={`w-100`}>
                   <div className={`mt-3`}>
                     <label htmlFor="input-username" className={`fw-bold`}>Username</label>
-                    <Field id="input-username" name="username" className={`form-control mt-1`} autocomplete="off" placeholder="Username..."/>
+                    <Field id="input-username" name="username" className={`form-control mt-1`} autoComplete="off" placeholder="Username..."/>
                   </div>
                   <div className={`mt-3`}>
                     <label htmlFor="input-password" className={`fw-bold`}>Password</label>
-                    <Field id="input-password" type="password" name="password" className={`form-control mt-1`} autocomplete="off" placeholder="Password..."/>
+                    <Field id="input-password" type="password" name="password" className={`form-control mt-1`} autoComplete="off" placeholder="Password..."/>
                   </div>
                   <div className={`mt-3`}>
                     <label htmlFor="input-confirm-password" className={`fw-bold`}>Confirm password</label>
-                    <Field id="input-confirm-password" type="password" name="confirmPassword" className={`form-control mt-1`} autocomplete="off" placeholder="Confirm password..."/>
+                    <Field id="input-confirm-password" type="password" name="confirmPassword" className={`form-control mt-1`} autoComplete="off" placeholder="Confirm password..."/>
                   </div>
+                </div>
+                <div className={`mt-4 w-100`}>
+                  <button className={`btn btn-info w-100 fw-bold`}>Register</button>
                 </div>
               </div>
             </Form>

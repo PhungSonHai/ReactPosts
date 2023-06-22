@@ -3,8 +3,10 @@ const bcrypt = require('bcrypt')
 
 class AuthController {
     registration(req, res, next) {
-        const { username, password } = req.body
-        bcrypt.hash(password, 10)
+        const { username, password, confirmPassword } = req.body
+
+        if(password === confirmPassword) {
+            bcrypt.hash(password, 10)
             .then(hash => {
                 User.create({
                     username: username,
@@ -14,6 +16,10 @@ class AuthController {
                     .catch(() => res.json({message: "Register Failed!"}))
             })
             .catch(error => res.json(error))
+        } 
+        else {
+            res.json({ message: "Password doesn't match" })
+        }
     }
 
     async login(req, res, next) {
