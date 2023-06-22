@@ -1,0 +1,12 @@
+.icon-back {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.icon-back:hover {
+    transform: translate(-3px, -3px);
+}
+
+.wrap-form-register {
+    width: 400px;
+}

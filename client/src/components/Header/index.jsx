@@ -6,6 +6,8 @@ import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './header.module.scss';
 import { useState, useEffect } from 'react';
+import images from '../../assets';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const cx = classNames.bind(styles);
 
@@ -34,13 +36,32 @@ function index() {
           </div>
           
           <div>
-            <NavDropdown title="Setting" id="nav-dropdown">
-                <NavDropdown.Item>Action</NavDropdown.Item>
-                <NavDropdown.Item>Another action</NavDropdown.Item>
-                <NavDropdown.Item>Something else here</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item>Separated link</NavDropdown.Item>
-            </NavDropdown>
+            <Dropdown>
+              <Dropdown.Toggle className={`${cx('custom-toggle')} p-0 border-0`} style={{ backgroundColor: "unset" }}>
+                <img src={images.userSvg} alt="User" width={50} height={50} />
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <div>
+                  <Link to='/me/profile' className={`text-decoration-none`}>
+                    <div className={`${cx('text-dropdown')} py-1 text-dark px-3`}>
+                      My Profile
+                    </div>
+                  </Link>
+                  <Link to='/register' className={`text-decoration-none`}>
+                    <div className={`${cx('text-dropdown')} py-1 text-dark px-3`}>
+                      Register
+                    </div>
+                  </Link>
+                  <Link to='/login' className={`text-decoration-none`}>
+                    <div className={`${cx('text-dropdown')} py-1 text-dark px-3`}>
+                      Login
+                    </div>
+                  </Link>
+                </div>
+                <Dropdown.Divider />
+                <Dropdown.Item>Logout</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
       </Nav>
     </React.Fragment>
