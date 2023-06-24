@@ -1,0 +1,15 @@
+.icon-back {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.icon-back:hover {
+    transform: translate(-3px, -3px);
+}
+
+.wrap-form-login {
+    width: 400px;
+    box-shadow: 0 0 5px 2px lightblue;
+    padding: 15px;
+    border-radius: 10px;
+}

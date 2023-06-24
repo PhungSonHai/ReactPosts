@@ -34,20 +34,20 @@ class AuthController {
         const user = await User.findOne({ where: { username: username } })
 
         if(!user) {
-            res.json({ message: "User doesn't exist" })
-        }
-        
-        bcrypt.compare(password, user.password)
+            res.status(400).json({ message: "User doesn't exist" })
+        } else {
+            bcrypt.compare(password, user.password)
             .then(match => {
                 if(!match) {
-                    res.json({ message: "Password is wrong!" })
+                    res.status(400).json({ message: "Password is wrong!" })
                 }
                 else
                 {
-                    res.json({ message: "Logged success!" })
+                    res.status(200).json({ message: "Logged success!" })
                 }
             })
-            .catch(error => res.json(error)) 
+            .catch(error => res.status(400).json(error)) 
+        }
     }
 }
 
