@@ -2,23 +2,30 @@ const { User } = require('../models')
 const bcrypt = require('bcrypt')
 
 class AuthController {
-    registration(req, res, next) {
+    async registration(req, res, next) {
         const { username, password, confirmPassword } = req.body
 
-        if(password === confirmPassword) {
-            bcrypt.hash(password, 10)
-            .then(hash => {
-                User.create({
-                    username: username,
-                    password: hash
-                })
-                    .then(() => res.json({message: "Register Success!"}))
-                    .catch(() => res.json({message: "Register Failed!"}))
-            })
-            .catch(error => res.json(error))
-        } 
+        const user = await User.findOne({ where: { username: username } })
+
+        if(user) {
+            res.status(400).json({ message: "Username already exists" })
+        }
         else {
-            res.json({ message: "Password doesn't match" })
+            if(password === confirmPassword) {
+                bcrypt.hash(password, 10)
+                .then(hash => {
+                    User.create({
+                        username: username,
+                        password: hash
+                    })
+                        .then(() => res.status(200).json({message: "Register Success!"}))
+                        .catch(() => res.status(400).json({message: "Register Failed!"}))
+                })
+                .catch(error => res.json(error))
+            } 
+            else {
+                res.status(400).json({ message: "Password doesn't match" })
+            }
         }
     }
 
