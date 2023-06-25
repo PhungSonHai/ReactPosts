@@ -7,6 +7,7 @@ import classNames from 'classnames/bind';
 import styles from './detail-post.module.scss';
 import images from '../../assets';
 import Form from 'react-bootstrap/Form';
+import Toast from 'react-bootstrap/Toast';
 
 const cx = classNames.bind(styles);
 
@@ -15,7 +16,8 @@ function DetailPost() {
     const [post, setPost] = useState({})
     const [comments, setComments] = useState([])
     const [valueComment, setValueComment] = useState("")
-
+    const [error, setError] = useState("")
+ 
     useEffect(() => {   
         axios.get(`http://localhost:3001/posts/${id}`)
             .then(response => setPost(response.data))
@@ -37,10 +39,18 @@ function DetailPost() {
             postId: id
         }
 
-        axios.post(`http://localhost:3001/comment/create`, data)
-            .then(() => {
-                setComments([...comments, data])
-                setValueComment("")
+        let headers = {
+            accessToken: sessionStorage.getItem("accessToken")
+        }
+
+        axios.post(`http://localhost:3001/comment/create`, data, { headers })
+            .then(response => {
+                if(response.data.error) {
+                    setError(response.data.error)
+                } else {
+                    setComments([...comments, data])
+                    setValueComment("")
+                }
             })
             .catch(error => console.log(error))
     }
@@ -53,6 +63,18 @@ function DetailPost() {
 
     return (
         <React.Fragment>
+            <Toast onClose={() => setError('')} className={`position-fixed top-0 end-0`} style={{ zIndex: 100 }} show={error !== ''} delay={5000} autohide>
+                <Toast.Header>
+                    <img
+                    src="holder.js/20x20?text=%20"
+                    className="rounded me-2"
+                    alt=""
+                    />
+                    <strong className="me-auto">Error</strong>
+                </Toast.Header>
+                <Toast.Body>{error}</Toast.Body>
+            </Toast>
+
             <div className={`d-flex flex-fill justify-content-between align-items-center`}>
                 <div className={`d-flex flex-fill flex-column align-items-center justify-content-center`}>
                     <h2 className={`text-uppercase fw-bold`}>Detail Post</h2>

@@ -22,8 +22,15 @@ function index() {
 
   const onSubmit = (data) => {
     axios.post("http://localhost:3001/auth/login", data)
-      .then(() => navigate(-1))
-      .catch(error => setError(error.response.data.message))
+      .then(response => {
+        if(response.data.error) {
+          setError(response.data.error)
+        } else {
+          sessionStorage.setItem("accessToken", response.data)
+          navigate(-1)
+        }
+      })
+      .catch(error => setError("Error occurred"))
   } 
 
   const validationSchema = Yup.object().shape({

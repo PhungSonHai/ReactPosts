@@ -23,8 +23,14 @@ function index() {
 
   const onSubmit = (data) => {
     axios.post("http://localhost:3001/auth/registration", data)
-      .then(() => navigate(-1))
-      .catch(error => setError(error.response.data.message))
+      .then(response => {
+        if(response.data.error) {
+          setError(response.data.error)
+        } else {
+          navigate(-1)
+        }
+      })
+      .catch(error => setError(error))
   } 
 
   const validationSchema = Yup.object().shape({
