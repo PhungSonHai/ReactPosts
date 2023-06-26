@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import images from './../../assets';
 import classNames from 'classnames/bind';
 import styles from './login.module.scss';
@@ -8,12 +8,14 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Toast from 'react-bootstrap/Toast';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { AuthContext } from './../../helpers/AuthContext';
 
 const cx = classNames.bind(styles);
 
 function index() {
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const { setAuthState } = useContext(AuthContext)
 
   const initialValues = {
     username: "",
@@ -27,6 +29,7 @@ function index() {
           setError(response.data.error)
         } else {
           localStorage.setItem("accessToken", response.data)
+          setAuthState(true)
           navigate('/')
         }
       })

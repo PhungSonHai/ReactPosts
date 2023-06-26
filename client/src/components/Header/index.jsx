@@ -5,19 +5,26 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './header.module.scss';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import images from '../../assets';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { AuthContext } from './../../helpers/AuthContext';
 
 const cx = classNames.bind(styles);
 
 function index() {
   const [tabActive, setTabActive] = useState('/')
   const location = useLocation()
+  const { authState, setAuthState } = useContext(AuthContext)
 
   useEffect(() => {
     setTabActive(location.pathname.split("/")[1])
   }, [location.pathname])
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken")
+    setAuthState(false)
+  }
 
   return (
     <React.Fragment>
@@ -48,7 +55,12 @@ function index() {
                     </div>
                   </Link>
                   {
-                    !localStorage.getItem("accessToken") && (
+                    authState ? (
+                      <React.Fragment>
+                        <Dropdown.Divider />
+                        <Dropdown.Item className={`${cx('text-dropdown')}`} onClick={handleLogout}>Logout</Dropdown.Item>
+                      </React.Fragment>
+                    ) : (
                       <React.Fragment>
                         <Link to='/register' className={`text-decoration-none`}>
                           <div className={`${cx('text-dropdown')} py-1 text-dark px-3`}>
@@ -64,8 +76,6 @@ function index() {
                     )
                   }
                 </div>
-                <Dropdown.Divider />
-                <Dropdown.Item>Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>
