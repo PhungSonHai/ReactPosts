@@ -26,8 +26,8 @@ function index() {
         if(response.data.error) {
           setError(response.data.error)
         } else {
-          sessionStorage.setItem("accessToken", response.data)
-          navigate(-1)
+          localStorage.setItem("accessToken", response.data)
+          navigate('/')
         }
       })
       .catch(error => setError("Error occurred"))

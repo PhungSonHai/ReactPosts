@@ -40,7 +40,7 @@ function DetailPost() {
         }
 
         let headers = {
-            accessToken: sessionStorage.getItem("accessToken")
+            accessToken: localStorage.getItem("accessToken")
         }
 
         axios.post(`http://localhost:3001/comment/create`, data, { headers })
@@ -48,7 +48,7 @@ function DetailPost() {
                 if(response.data.error) {
                     setError(response.data.error)
                 } else {
-                    setComments([...comments, data])
+                    setComments([...comments, response.data.dataCreate])
                     setValueComment("")
                 }
             })
@@ -114,8 +114,11 @@ function DetailPost() {
                             {
                                 comments.map((item, index) => {
                                     return <div key={index} className={`d-flex mt-2`}>
-                                                <img width={20} height={20} className={`${cx('icon-comment')} me-1`} src={images.dotSvg} alt="" />
-                                                <span className={`${cx('text-comment')}`}>{item.comment}</span>
+                                                <img width={20} height={20} className={`${cx('icon-comment')} me-2`} src={images.dotSvg} alt="" />
+                                                <div className={`d-flex flex-column`}>
+                                                    <small className={`fw-bold`} style={{ marginTop: 1 }}>{item.username}</small>
+                                                    <span className={`${cx('text-comment')}`}>{item.comment}</span>
+                                                </div>
                                             </div>
                                 })
                             }

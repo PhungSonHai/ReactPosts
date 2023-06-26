@@ -22,7 +22,7 @@ class AuthController {
                         .then(() => res.json({message: "Register Success!"}))
                         .catch(() => res.json({error: "Register Failed!"}))
                 })
-                .catch(error => res.json(error))
+                .catch(error => res.json({ error }))
             } 
             else {
                 res.json({ error: "Password doesn't match" })

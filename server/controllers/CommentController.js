@@ -2,8 +2,12 @@ const { Comment } = require('../models')
 
 class CommentController {
     store(req, res, next) {
+        const username = req.user.username
+        
+        req.body.username = username
+
         Comment.create(req.body)
-            .then(() => res.send("Create comment success!"))
+            .then(() => res.json({ message: "Create comment success!", dataCreate: req.body }))
             .catch(next)
     }
 

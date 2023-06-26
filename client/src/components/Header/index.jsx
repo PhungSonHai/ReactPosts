@@ -47,16 +47,22 @@ function index() {
                       My Profile
                     </div>
                   </Link>
-                  <Link to='/register' className={`text-decoration-none`}>
-                    <div className={`${cx('text-dropdown')} py-1 text-dark px-3`}>
-                      Register
-                    </div>
-                  </Link>
-                  <Link to='/login' className={`text-decoration-none`}>
-                    <div className={`${cx('text-dropdown')} py-1 text-dark px-3`}>
-                      Login
-                    </div>
-                  </Link>
+                  {
+                    !localStorage.getItem("accessToken") && (
+                      <React.Fragment>
+                        <Link to='/register' className={`text-decoration-none`}>
+                          <div className={`${cx('text-dropdown')} py-1 text-dark px-3`}>
+                            Register
+                          </div>
+                        </Link>
+                        <Link to='/login' className={`text-decoration-none`}>
+                          <div className={`${cx('text-dropdown')} py-1 text-dark px-3`}>
+                            Login
+                          </div>
+                        </Link>
+                      </React.Fragment>
+                    )
+                  }
                 </div>
                 <Dropdown.Divider />
                 <Dropdown.Item>Logout</Dropdown.Item>

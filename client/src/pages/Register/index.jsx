@@ -27,7 +27,7 @@ function index() {
         if(response.data.error) {
           setError(response.data.error)
         } else {
-          navigate(-1)
+          navigate('/login')
         }
       })
       .catch(error => setError(error))
